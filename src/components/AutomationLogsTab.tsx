@@ -11,6 +11,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { ScanLog, PublishLog } from '../types/index.js';
+import { formatDateTimeDDMMYYYY } from '../utils/dateUtils.js';
 
 interface AutomationLogsTabProps {
   logs: {
@@ -24,6 +25,12 @@ export const AutomationLogsTab: React.FC<AutomationLogsTabProps> = ({
   logs,
   onRefresh,
 }) => {
+  const sortedPublishLogs = [...(logs.publishLogs || [])].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+  const sortedScanLogs = [...(logs.scanLogs || [])].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-12">
       {/* Top Header */}
@@ -64,7 +71,7 @@ export const AutomationLogsTab: React.FC<AutomationLogsTabProps> = ({
               </div>
             ) : (
               <div className="space-y-3 max-h-[500px] overflow-y-auto">
-                {logs.publishLogs.map((log) => (
+                {sortedPublishLogs.map((log) => (
                   <div
                     key={log.id}
                     className="p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs space-y-1.5"
@@ -89,7 +96,7 @@ export const AutomationLogsTab: React.FC<AutomationLogsTabProps> = ({
                     </div>
 
                     <div className="flex items-center justify-between pt-1 border-t border-slate-200 text-[10px] text-slate-400">
-                      <span>{new Date(log.timestamp).toLocaleString()}</span>
+                      <span>{formatDateTimeDDMMYYYY(log.timestamp)}</span>
                       {log.postUrl && (
                         <a
                           href={log.postUrl}
@@ -124,7 +131,7 @@ export const AutomationLogsTab: React.FC<AutomationLogsTabProps> = ({
               </div>
             ) : (
               <div className="space-y-3 max-h-[500px] overflow-y-auto">
-                {logs.scanLogs.map((log) => (
+                {sortedScanLogs.map((log) => (
                   <div
                     key={log.id}
                     className="p-3 rounded-xl border border-slate-200 bg-slate-50 text-xs space-y-1.5"
@@ -155,7 +162,7 @@ export const AutomationLogsTab: React.FC<AutomationLogsTabProps> = ({
                     )}
 
                     <div className="pt-1 border-t border-slate-200 text-[10px] text-slate-400 flex items-center justify-between">
-                      <span>{new Date(log.timestamp).toLocaleString()}</span>
+                      <span>{formatDateTimeDDMMYYYY(log.timestamp)}</span>
                       <span>Found: {log.foundCount} notices</span>
                     </div>
                   </div>

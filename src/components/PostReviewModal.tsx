@@ -18,6 +18,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { GovVacancy, GeneratedPost, AutomationSettings } from '../types/index.js';
+import { formatDateDDMMYYYY } from '../utils/dateUtils.js';
 
 interface PostReviewModalProps {
   vacancy: GovVacancy;
@@ -48,7 +49,7 @@ export const PostReviewModal: React.FC<PostReviewModalProps> = ({
   const post: GeneratedPost = vacancy.generatedPost || {
     title: `${vacancy.shortName} Notification 2026: ${vacancy.vacanciesCount} Vacancies Released, Eligibility & Syllabus`,
     slug: `${vacancy.shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}-notification-apply-online`,
-    excerpt: `${vacancy.title}. Apply online for ${vacancy.vacanciesCount} vacancies. Last date: ${vacancy.lastDate}. Check full eligibility and syllabus on ESC Kolkata.`,
+    excerpt: `${vacancy.title}. Apply online for ${vacancy.vacanciesCount} vacancies. Last date: ${formatDateDDMMYYYY(vacancy.lastDate)}. Check full eligibility and syllabus on ESC Kolkata.`,
     htmlContent: `
       <div class="esc-notice-wrapper">
         <div style="background: #eff6ff; border-left: 4px solid #2563eb; padding: 14px; margin-bottom: 20px; border-radius: 4px;">
@@ -66,7 +67,7 @@ export const PostReviewModal: React.FC<PostReviewModalProps> = ({
           <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Pay Scale / Salary</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${vacancy.salaryScale}</td></tr>
           <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Minimum Qualification</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${vacancy.qualification}</td></tr>
           <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Age Criteria</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${vacancy.ageLimit}</td></tr>
-          <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Application Window</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${vacancy.startDate} to <strong>${vacancy.lastDate}</strong></td></tr>
+          <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Application Window</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${formatDateDDMMYYYY(vacancy.startDate)} to <strong>${formatDateDDMMYYYY(vacancy.lastDate)}</strong></td></tr>
           <tr><td style="padding: 8px; border: 1px solid #ddd; background: #f8fafc;"><strong>Application Fee</strong></td><td style="padding: 8px; border: 1px solid #ddd;">${vacancy.applicationFee}</td></tr>
         </table>
 
@@ -124,12 +125,12 @@ export const PostReviewModal: React.FC<PostReviewModalProps> = ({
         </p>
       </div>
     `,
-    markdownContent: `# ${vacancy.title}\n\n${vacancy.summary}\n\n* Total Vacancies: ${vacancy.vacanciesCount}\n* Last Date: ${vacancy.lastDate}\n* Qualification: ${vacancy.qualification}`,
+    markdownContent: `# ${vacancy.title}\n\n${vacancy.summary}\n\n* Total Vacancies: ${vacancy.vacanciesCount}\n* Last Date: ${formatDateDDMMYYYY(vacancy.lastDate)}\n* Qualification: ${vacancy.qualification}`,
     categories: ['Govt Jobs', vacancy.examBoard, 'Exam Notifications'],
     tags: [vacancy.shortName, 'Govt Jobs 2026', 'Admit Card', 'Syllabus', 'ESC Kolkata'],
     seoKeywords: [vacancy.shortName, 'Eligibility', 'Vacancies', 'Last Date', 'Syllabus'],
-    whatsAppAlert: `🚨 *NEW GOVT JOB NOTIFICATION RELEASED!* 🚨\n\n📌 *Exam:* ${vacancy.title}\n🏛️ *Board:* ${vacancy.examBoard}\n🎯 *Total Vacancies:* ${vacancy.vacanciesCount}\n💰 *Salary:* ${vacancy.salaryScale}\n🎓 *Eligibility:* ${vacancy.qualification}\n⏳ *Last Date to Apply:* ${vacancy.lastDate}\n\n📖 *Complete Syllabus, Eligibility & Apply Link:* https://esckolkata2003.org/${vacancy.shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}\n\n_Shared by Education Support Council (ESC Kolkata) - Guiding Aspirants Since 2003_`,
-    telegramAlert: `📢 **NEW GOVT EXAM VACANCY ALERT** 📢\n\n**${vacancy.title}**\n\n🔹 **Vacancies:** ${vacancy.vacanciesCount}\n🔹 **Board:** ${vacancy.examBoard}\n🔹 **Pay Scale:** ${vacancy.salaryScale}\n🔹 **Eligibility:** ${vacancy.qualification}\n🔹 **Last Date:** ${vacancy.lastDate}\n\n🔗 **Read Full Details & Syllabus Breakdown:**\nhttps://esckolkata2003.org/${vacancy.shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}\n\n*ESC Kolkata Study Portal (Est. 2003)*`,
+    whatsAppAlert: `🚨 *NEW GOVT JOB NOTIFICATION RELEASED!* 🚨\n\n📌 *Exam:* ${vacancy.title}\n🏛️ *Board:* ${vacancy.examBoard}\n🎯 *Total Vacancies:* ${vacancy.vacanciesCount}\n💰 *Salary:* ${vacancy.salaryScale}\n🎓 *Eligibility:* ${vacancy.qualification}\n⏳ *Last Date to Apply:* ${formatDateDDMMYYYY(vacancy.lastDate)}\n\n📖 *Complete Syllabus, Eligibility & Apply Link:* https://esckolkata2003.org/${vacancy.shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}\n\n_Shared by Education Support Council (ESC Kolkata) - Guiding Aspirants Since 2003_`,
+    telegramAlert: `📢 **NEW GOVT EXAM VACANCY ALERT** 📢\n\n**${vacancy.title}**\n\n🔹 **Vacancies:** ${vacancy.vacanciesCount}\n🔹 **Board:** ${vacancy.examBoard}\n🔹 **Pay Scale:** ${vacancy.salaryScale}\n🔹 **Eligibility:** ${vacancy.qualification}\n🔹 **Last Date:** ${formatDateDDMMYYYY(vacancy.lastDate)}\n\n🔗 **Read Full Details & Syllabus Breakdown:**\nhttps://esckolkata2003.org/${vacancy.shortName.toLowerCase().replace(/[^a-z0-9]+/g, '-')}\n\n*ESC Kolkata Study Portal (Est. 2003)*`,
   };
 
   const copyToClipboard = (text: string, type: string) => {

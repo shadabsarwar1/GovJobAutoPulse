@@ -42,7 +42,11 @@ export function formatDateDDMMYYYY(dateInput: string | Date | undefined | null):
 
 export function formatDateTimeDDMMYYYY(dateInput: string | Date | undefined | null): string {
   if (!dateInput) return '';
-  const d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  let d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  if (isNaN(d.getTime()) && typeof dateInput === 'string') {
+    const parsed = parseDateFlexible(dateInput);
+    if (parsed) d = parsed;
+  }
   if (isNaN(d.getTime())) {
     return String(dateInput);
   }

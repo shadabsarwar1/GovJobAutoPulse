@@ -22,6 +22,7 @@ import {
   Mail,
 } from 'lucide-react';
 import { GovVacancy, AutomationSettings, SystemStatus, GeneratedPost, NotificationLog } from './types/index.js';
+import { parseDateFlexible, formatDateDDMMYYYY } from './utils/dateUtils.js';
 import { Header } from './components/Header.js';
 import { MetricsOverview } from './components/MetricsOverview.js';
 import { VacancyCard } from './components/VacancyCard.js';
@@ -55,6 +56,7 @@ export default function App() {
   const [selectedBoard, setSelectedBoard] = useState('all');
   const [selectedQualification, setSelectedQualification] = useState('all');
   const [activeFilter, setActiveFilter] = useState('all');
+  const [deadlineSortOrder, setDeadlineSortOrder] = useState<'desc' | 'asc'>('desc');
 
   // Modals state
   const [reviewingVacancy, setReviewingVacancy] = useState<GovVacancy | null>(null);
@@ -87,7 +89,20 @@ export default function App() {
       if (vRes.ok) setVacancies(await vRes.json());
       if (sRes.ok) setSettings(await sRes.json());
       if (stRes.ok) setStatus(await stRes.json());
-      if (lRes.ok) setLogs(await lRes.json());
+      if (lRes.ok) {
+        const logsData = await lRes.json();
+        setLogs({
+          scanLogs: (logsData.scanLogs || []).sort(
+            (a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          ),
+          publishLogs: (logsData.publishLogs || []).sort(
+            (a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          ),
+          notificationLogs: (logsData.notificationLogs || []).sort(
+            (a: any, b: any) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          ),
+        });
+      }
     } catch (err) {
       console.error('Failed to load application data:', err);
     } finally {
@@ -283,6 +298,13 @@ export default function App() {
       (activeFilter === 'closing_soon' && v.status === 'closing_soon');
 
     return matchesSearch && matchesBoard && matchesQualification && matchesFilter;
+  });
+
+  // Arrange the application deadline chronologically with newest first
+  const sortedVacancies = [...filteredVacancies].sort((a, b) => {
+    const timeA = parseDateFlexible(a.lastDate)?.getTime() || 0;
+    const timeB = parseDateFlexible(b.lastDate)?.getTime() || 0;
+    return deadlineSortOrder === 'desc' ? timeB - timeA : timeA - timeB;
   });
 
   return (
@@ -500,6 +522,19 @@ export default function App() {
                 >
                   Closing Soon
                 </button>
+
+                <div className="ml-auto shrink-0">
+                  <button
+                    onClick={() => setDeadlineSortOrder((prev) => (prev === 'desc' ? 'asc' : 'desc'))}
+                    title="Toggle Deadline Sort Order (Chronological)"
+                    className="px-2.5 py-1 rounded-md text-xs font-bold border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 flex items-center gap-1.5 cursor-pointer shadow-2xs transition"
+                  >
+                    <Clock className="w-3.5 h-3.5 text-blue-600" />
+                    <span>
+                      Deadline: {deadlineSortOrder === 'desc' ? 'Newest First (Chronological)' : 'Oldest First'}
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
 
@@ -509,7 +544,7 @@ export default function App() {
                 <RefreshCw className="w-8 h-8 text-blue-600 animate-spin mx-auto mb-3" />
                 <p className="text-sm font-semibold text-slate-700">Connecting to GovJobAutoPulse engine...</p>
               </div>
-            ) : filteredVacancies.length === 0 ? (
+            ) : sortedVacancies.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center shadow-xs">
                 <AlertCircle className="w-12 h-12 text-slate-300 mx-auto mb-3" />
                 <h3 className="text-base font-bold text-slate-800">No Exam Notifications Found</h3>
@@ -538,7 +573,7 @@ export default function App() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {filteredVacancies.map((vacancy) => (
+                {sortedVacancies.map((vacancy) => (
                   <div key={vacancy.id} className="relative flex flex-col">
                     {/* Admin Approval Notice tag if pending */}
                     {vacancy.approvalStatus === 'pending_approval' && (

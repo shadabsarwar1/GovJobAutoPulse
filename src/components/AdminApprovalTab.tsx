@@ -25,6 +25,7 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { GovVacancy, AutomationSettings, NotificationLog } from '../types/index.js';
+import { formatDateDDMMYYYY, formatDateTimeDDMMYYYY, parseDateFlexible } from '../utils/dateUtils.js';
 
 interface AdminApprovalTabProps {
   vacancies: GovVacancy[];
@@ -200,11 +201,19 @@ export const AdminApprovalTab: React.FC<AdminApprovalTabProps> = ({
     }
   };
 
-  const pendingApprovalVacancies = vacancies.filter(
-    (v) => v.approvalStatus === 'pending_approval'
-  );
+  const pendingApprovalVacancies = vacancies
+    .filter((v) => v.approvalStatus === 'pending_approval')
+    .sort((a, b) => {
+      const dateA = parseDateFlexible(a.lastDate)?.getTime() || 0;
+      const dateB = parseDateFlexible(b.lastDate)?.getTime() || 0;
+      return dateB - dateA;
+    });
   const approvedVacancies = vacancies.filter(
     (v) => v.approvalStatus === 'approved' || v.approvalStatus === 'auto_approved'
+  );
+
+  const sortedNotificationLogs = [...notificationLogs].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
   );
 
   const handleApprove = async (id: string) => {
@@ -398,7 +407,7 @@ export const AdminApprovalTab: React.FC<AdminApprovalTabProps> = ({
 
                   <div className="flex items-center gap-4 text-[11px] text-slate-500 pt-1">
                     <span>Pay: <strong>{vacancy.salaryScale}</strong></span>
-                    <span>Deadline: <strong className="text-rose-600">{vacancy.lastDate}</strong></span>
+                    <span>Deadline: <strong className="text-rose-600">{formatDateDDMMYYYY(vacancy.lastDate)}</strong></span>
                     <span>Eligibility: <strong>{vacancy.qualificationLevel}</strong></span>
                   </div>
                 </div>
@@ -997,7 +1006,7 @@ export const AdminApprovalTab: React.FC<AdminApprovalTabProps> = ({
           </div>
         ) : (
           <div className="space-y-2.5 max-h-72 overflow-y-auto">
-            {notificationLogs.map((log) => (
+            {sortedNotificationLogs.map((log) => (
               <div
                 key={log.id}
                 className="p-3 rounded-xl border border-slate-200 bg-slate-50/70 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2"
@@ -1018,7 +1027,7 @@ export const AdminApprovalTab: React.FC<AdminApprovalTabProps> = ({
                     </span>
                   </div>
                   <div className="text-[11px] text-slate-500 mt-0.5">
-                    To: {log.recipientEmail} • {log.recipientWhatsApp} • {new Date(log.timestamp).toLocaleTimeString()}
+                    To: {log.recipientEmail} • {log.recipientWhatsApp} • {formatDateTimeDDMMYYYY(log.timestamp)}
                   </div>
                 </div>
 

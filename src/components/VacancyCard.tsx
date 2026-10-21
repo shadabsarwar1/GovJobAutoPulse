@@ -18,6 +18,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import { GovVacancy } from '../types/index.js';
+import { formatDateDDMMYYYY, getDaysLeft } from '../utils/dateUtils.js';
 
 interface VacancyCardProps {
   vacancy: GovVacancy;
@@ -34,19 +35,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
   onDeleteVacancy,
   isPublishing,
 }) => {
-  // Calculate remaining days
-  const calculateDaysLeft = (lastDateStr: string) => {
-    try {
-      const target = new Date(lastDateStr).getTime();
-      const now = new Date().getTime();
-      const diff = Math.ceil((target - now) / (1000 * 60 * 60 * 24));
-      return diff;
-    } catch {
-      return null;
-    }
-  };
-
-  const daysLeft = calculateDaysLeft(vacancy.lastDate);
+  const daysLeft = getDaysLeft(vacancy.lastDate);
 
   // Board colors
   const getBoardBadgeClass = (board: string) => {
@@ -185,7 +174,7 @@ export const VacancyCard: React.FC<VacancyCardProps> = ({
               Application Deadline:
             </span>
             <div className="flex items-center gap-1.5 mt-0.5">
-              <span className="font-bold text-slate-900">{vacancy.lastDate}</span>
+              <span className="font-bold text-slate-900">{formatDateDDMMYYYY(vacancy.lastDate)}</span>
               {daysLeft !== null && daysLeft > 0 && daysLeft <= 10 && (
                 <span className="text-[10px] px-1 py-0.2 rounded font-bold bg-rose-100 text-rose-700 animate-pulse">
                   {daysLeft}d left!

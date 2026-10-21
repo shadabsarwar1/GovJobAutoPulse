@@ -40,9 +40,39 @@ export function formatDateDDMMYYYY(dateInput: string | Date | undefined | null):
   return `${day}-${month}-${year}`;
 }
 
+export function parseDateFlexible(dateStr: string | undefined | null): Date | null {
+  if (!dateStr) return null;
+  const trimmed = dateStr.trim();
+
+  // Check DD-MM-YYYY or DD/MM/YYYY
+  const dmyMatch = trimmed.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})/);
+  if (dmyMatch) {
+    const day = parseInt(dmyMatch[1], 10);
+    const month = parseInt(dmyMatch[2], 10) - 1;
+    const year = parseInt(dmyMatch[3], 10);
+    return new Date(year, month, day);
+  }
+
+  // Check YYYY-MM-DD
+  const ymdMatch = trimmed.match(/^(\d{4})[-/](\d{1,2})[-/](\d{1,2})/);
+  if (ymdMatch) {
+    const year = parseInt(ymdMatch[1], 10);
+    const month = parseInt(ymdMatch[2], 10) - 1;
+    const day = parseInt(ymdMatch[3], 10);
+    return new Date(year, month, day);
+  }
+
+  const d = new Date(trimmed);
+  return isNaN(d.getTime()) ? null : d;
+}
+
 export function formatDateTimeDDMMYYYY(dateInput: string | Date | undefined | null): string {
   if (!dateInput) return '';
-  const d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  let d = dateInput instanceof Date ? dateInput : new Date(dateInput);
+  if (isNaN(d.getTime()) && typeof dateInput === 'string') {
+    const parsed = parseDateFlexible(dateInput);
+    if (parsed) d = parsed;
+  }
   if (isNaN(d.getTime())) {
     return String(dateInput);
   }

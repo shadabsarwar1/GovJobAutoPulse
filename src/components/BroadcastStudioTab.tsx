@@ -13,6 +13,7 @@ import {
   Clock,
 } from 'lucide-react';
 import { GovVacancy, AutomationSettings } from '../types/index.js';
+import { formatDateDDMMYYYY, parseDateFlexible } from '../utils/dateUtils.js';
 
 interface BroadcastStudioTabProps {
   vacancies: GovVacancy[];
@@ -23,8 +24,14 @@ export const BroadcastStudioTab: React.FC<BroadcastStudioTabProps> = ({
   vacancies,
   settings,
 }) => {
+  const sortedVacancies = [...vacancies].sort(
+    (a, b) =>
+      (parseDateFlexible(b.lastDate)?.getTime() || 0) -
+      (parseDateFlexible(a.lastDate)?.getTime() || 0)
+  );
+
   const [selectedVacancyId, setSelectedVacancyId] = useState<string>(
-    vacancies[0]?.id || ''
+    sortedVacancies[0]?.id || ''
   );
   const [copiedType, setCopiedType] = useState<string | null>(null);
   const [customAnnouncement, setCustomAnnouncement] = useState(
@@ -32,7 +39,7 @@ export const BroadcastStudioTab: React.FC<BroadcastStudioTabProps> = ({
   );
 
   const selectedVacancy =
-    vacancies.find((v) => v.id === selectedVacancyId) || vacancies[0];
+    sortedVacancies.find((v) => v.id === selectedVacancyId) || sortedVacancies[0];
 
   const copyToClipboard = (text: string, type: string) => {
     navigator.clipboard.writeText(text);
@@ -66,8 +73,8 @@ export const BroadcastStudioTab: React.FC<BroadcastStudioTabProps> = ({
 ⏳ *Age Limit:* ${selectedVacancy.ageLimit}
 
 📅 *IMPORTANT DATES:*
-• Application Start: ${selectedVacancy.startDate}
-• *Last Date to Apply:* ${selectedVacancy.lastDate}
+• Application Start: ${formatDateDDMMYYYY(selectedVacancy.startDate)}
+• *Last Date to Apply:* ${formatDateDDMMYYYY(selectedVacancy.lastDate)}
 • Exam Schedule: ${selectedVacancy.examDate || 'Announced Soon'}
 
 💡 *ESC KOLKATA MENTOR STRATEGY:*
@@ -96,7 +103,7 @@ _Guiding Competitive Aspirants Since 2003_
 🔹 **Age Criteria:** ${selectedVacancy.ageLimit}
 
 ⏰ **CRUCIAL APPLICATION DEADLINE:**
-**${selectedVacancy.lastDate}**
+**${formatDateDDMMYYYY(selectedVacancy.lastDate)}**
 
 💡 **ESC Kolkata Faculty Tip:**
 _${selectedVacancy.esckolkataGuidance?.strategyTips?.[0] || 'Focus on speed and accuracy in reasoning and quantitative sections.'}_
@@ -124,18 +131,18 @@ ${fullArticleLink}
         </div>
 
         {/* Exam selector */}
-        <div className="w-full sm:w-72">
+        <div className="w-full sm:w-80">
           <label className="text-[11px] font-bold text-slate-600 uppercase tracking-wider block mb-1">
-            Select Exam to Broadcast:
+            Select Exam to Broadcast (Newest Deadline First):
           </label>
           <select
             value={selectedVacancyId}
             onChange={(e) => setSelectedVacancyId(e.target.value)}
             className="w-full p-2 text-xs border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-slate-50 font-medium"
           >
-            {vacancies.map((v) => (
+            {sortedVacancies.map((v) => (
               <option key={v.id} value={v.id}>
-                {v.shortName} ({v.vacanciesCount} Vacancies)
+                {v.shortName} (Deadline: {formatDateDDMMYYYY(v.lastDate)} • {v.vacanciesCount} Posts)
               </option>
             ))}
           </select>

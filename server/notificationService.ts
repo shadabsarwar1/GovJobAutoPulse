@@ -3,6 +3,7 @@ import nodemailer from 'nodemailer';
 import { GovVacancy, AutomationSettings, NotificationLog } from '../src/types/index.js';
 import { store } from './store.js';
 import { publishPostToWordPress } from './publisher.js';
+import { formatDateDDMMYYYY, formatDateTimeDDMMYYYY } from './dateUtils.js';
 
 export function generateApprovalToken(vacancyId: string): string {
   return `${vacancyId}-${crypto.randomBytes(8).toString('hex')}`;
@@ -86,7 +87,7 @@ export function buildAdminApprovalHtmlEmail(
         </tr>
         <tr>
           <td class="label">Application Deadline</td>
-          <td class="val" style="color: #dc2626;">${vacancy.lastDate}</td>
+          <td class="val" style="color: #dc2626;">${formatDateDDMMYYYY(vacancy.lastDate)}</td>
         </tr>
         <tr>
           <td class="label">Target Website</td>
@@ -123,7 +124,7 @@ Board: ${vacancy.examBoard} (${vacancy.jurisdiction})
 Vacancies: ${vacancy.vacanciesCount}
 Salary: ${vacancy.salaryScale}
 Eligibility: ${vacancy.qualification}
-Last Date: ${vacancy.lastDate}
+Last Date: ${formatDateDDMMYYYY(vacancy.lastDate)}
 
 Approve & Publish to esckolkata2003.org:
 ${approveUrl}
@@ -153,7 +154,7 @@ A new government vacancy has been detected by the surveillance radar:
 🎯 *Total Vacancies:* ${vacancy.vacanciesCount} Posts
 💰 *Pay Scale:* ${vacancy.salaryScale}
 🎓 *Eligibility:* ${vacancy.qualification} (${vacancy.qualificationLevel})
-⏳ *Last Date to Apply:* ${vacancy.lastDate}
+⏳ *Last Date to Apply:* ${formatDateDDMMYYYY(vacancy.lastDate)}
 
 ━━━━━━━━━━━━━━━━━━━━
 👉 *APPROVE & PUBLISH TO WEBSITE:*
@@ -394,7 +395,7 @@ export async function sendTestWhatsAppNotification(
   log: NotificationLog;
 }> {
   const cleanPhone = phone.replace(/[^0-9]/g, '');
-  const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+  const timestamp = formatDateTimeDDMMYYYY(new Date());
 
   const testMessage = `🔔 *EDUCATION SUPPORT COUNCIL (ESC KOLKATA)* 🔔
 ━━━━━━━━━━━━━━━━━━━━
@@ -490,7 +491,7 @@ export async function sendTestEmailNotification(
   error?: string;
   log: NotificationLog;
 }> {
-  const timestamp = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+  const timestamp = formatDateTimeDDMMYYYY(new Date());
   const subject = `[ESC Kolkata] Admin Approval Verification Test for ${email}`;
   const testApprovalUrl = `${appUrl}/#approvals`;
 

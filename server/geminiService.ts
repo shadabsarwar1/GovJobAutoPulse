@@ -60,8 +60,8 @@ Return a JSON array of up to 4 real or upcoming notifications matching these cat
 - qualification: string (e.g. "Madhyamik 10th Pass or Graduation")
 - qualificationLevel: string ('Graduate' | '12th Pass' | '10th Pass' | 'Post Graduate' | 'Engineering' | 'Diploma' | 'Medical / Nursing')
 - ageLimit: string (e.g. "18 to 40 years for WB; 18-30 for Central")
-- startDate: string (YYYY-MM-DD)
-- lastDate: string (YYYY-MM-DD)
+- startDate: string (DD-MM-YYYY)
+- lastDate: string (DD-MM-YYYY)
 - admitCardDate: string
 - examDate: string
 - applicationFee: string
@@ -114,8 +114,8 @@ Return a single JSON object with these keys:
 - qualification: string
 - qualificationLevel: string ('Graduate' | '12th Pass' | '10th Pass' | 'Post Graduate' | 'Engineering' | 'Diploma' | 'Medical / Nursing')
 - ageLimit: string
-- startDate: string (YYYY-MM-DD if found)
-- lastDate: string (YYYY-MM-DD if found)
+- startDate: string (DD-MM-YYYY if found)
+- lastDate: string (DD-MM-YYYY if found)
 - admitCardDate: string
 - examDate: string
 - applicationFee: string

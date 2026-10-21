@@ -865,9 +865,15 @@ class Store {
 
   public getLogs() {
     return {
-      scanLogs: this.scanLogs,
-      publishLogs: this.publishLogs,
-      notificationLogs: this.notificationLogs,
+      scanLogs: [...this.scanLogs].sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      ),
+      publishLogs: [...this.publishLogs].sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      ),
+      notificationLogs: [...this.notificationLogs].sort(
+        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+      ),
     };
   }
 
