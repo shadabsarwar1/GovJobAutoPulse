@@ -1,0 +1,7 @@
+{
+  "name": "GovJobAutoPulse - ESC Kolkata Exam Vacancy Automation",
+  "description": "Automated government exam notification scanner, AI post generator, and direct publishing pipeline for esckolkata2003.org (SSC, Bank PO, CGL, Income Tax & Govt Vacancies).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

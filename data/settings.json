@@ -1,0 +1,51 @@
+{
+  "siteUrl": "https://esckolkata2003.org",
+  "wpApiEndpoint": "https://esckolkata2003.org/wp-json/wp/v2/posts",
+  "wpUsername": "esckolkata_admin",
+  "wpAppPassword": "",
+  "postStatus": "draft",
+  "autoPublish": false,
+  "autoScanInterval": 60,
+  "jurisdictionFilter": "All",
+  "scanSources": [
+    "SSC Central",
+    "UPSC",
+    "IBPS & Banks",
+    "SBI Careers",
+    "Income Tax & CBDT",
+    "CBIC & Customs",
+    "Railways RRB & RRC",
+    "EPFO & ESIC",
+    "Defence Armed Forces",
+    "WBPSC West Bengal",
+    "WB Police (WBPRB & KP)",
+    "WB School Service (WBSSC)",
+    "WB Primary TET (WBBPE)",
+    "WB Municipal (WBMSC)",
+    "WB Health (WBHRB)",
+    "WB Panchayat & Zilla Parishads",
+    "WB PSUs (WBSEDCL)"
+  ],
+  "webhookUrl": "",
+  "webhookEnabled": false,
+  "defaultAuthor": "ESC Kolkata Exam Research Team",
+  "escBranding": {
+    "instituteName": "ESC Kolkata (Education Support Council)",
+    "tagline": "Guiding Aspirants to Central & West Bengal Government Service Since 2003",
+    "phone": "+91 98300 XXXXX / +91 33 22XX XXXX",
+    "email": "info@esckolkata2003.org",
+    "address": "Kolkata, West Bengal, India",
+    "website": "https://esckolkata2003.org",
+    "whatsappChannel": "https://whatsapp.com/channel/esckolkata2003",
+    "telegramChannel": "https://t.me/esckolkata_exams",
+    "includeStudyBatchCTA": true
+  },
+  "adminApproval": {
+    "adminEmail": "shadabsarwar@gmail.com",
+    "adminWhatsApp": "+919948900368",
+    "emailNotifyEnabled": true,
+    "whatsappNotifyEnabled": true,
+    "requireAdminApproval": true,
+    "emailGatewayType": "direct_link"
+  }
+}

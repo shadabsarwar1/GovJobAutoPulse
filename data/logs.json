@@ -1,0 +1,106 @@
+{
+  "scanLogs": [
+    {
+      "id": "init-scan-01",
+      "timestamp": "2026-10-19T11:22:53.624Z",
+      "trigger": "manual",
+      "foundCount": 6,
+      "newVacancies": [
+        "SSC CGL 2026",
+        "IBPS PO 2026",
+        "Income Tax Inspector 2026",
+        "SBI PO 2026",
+        "RRB NTPC 2026",
+        "WBPSC WBCS 2026"
+      ],
+      "status": "success",
+      "message": "Initial synchronization complete. Loaded 6 active exam notifications for ESC Kolkata."
+    }
+  ],
+  "publishLogs": [
+    {
+      "id": "pub-1792504297230",
+      "timestamp": "2026-10-20T13:51:37.230Z",
+      "vacancyId": "ssc-cgl-2026",
+      "vacancyTitle": "SSC CGL 2026: Combined Graduate Level Exam (Inspector of Income Tax, ASO, Central Excise)",
+      "destination": "https://esckolkata2003.org/wp-json/wp/v2/posts",
+      "status": "simulated_success",
+      "statusCode": 200,
+      "responseMessage": "[Simulated Sync Mode] Ready for esckolkata2003.org as 'draft'. To publish live directly via API, configure your WordPress Application Password in the Settings tab.",
+      "postUrl": "https://esckolkata2003.org/ssc-cgl-2026-recruitment-notification-2026"
+    },
+    {
+      "id": "pub-1792409045127",
+      "timestamp": "2026-10-19T11:24:05.127Z",
+      "vacancyId": "ssc-cgl-2026",
+      "vacancyTitle": "SSC CGL 2026: Combined Graduate Level Exam (Inspector of Income Tax, ASO, Central Excise)",
+      "destination": "https://esckolkata2003.org/wp-json/wp/v2/posts",
+      "status": "simulated_success",
+      "statusCode": 200,
+      "responseMessage": "[Simulated Sync Mode] Ready for esckolkata2003.org as 'draft'. To publish live directly via API, configure your WordPress Application Password in the Settings tab.",
+      "postUrl": "https://esckolkata2003.org/ssc-cgl-2026-notification-apply-online-eligibility"
+    }
+  ],
+  "notificationLogs": [
+    {
+      "id": "notif-1792517015406",
+      "timestamp": "2026-10-20T17:23:35.406Z",
+      "vacancyId": "ssc-cgl-2026",
+      "vacancyTitle": "SSC CGL 2026: Combined Graduate Level Exam (Inspector of Income Tax, ASO, Central Excise)",
+      "recipientEmail": "shadabsarwar@gmail.com",
+      "recipientWhatsApp": "+919948900368",
+      "channel": "both",
+      "status": "sent",
+      "approvalUrl": "https://ais-dev-6jmtbv2spoj6xl7sqiygsj-639446796713.asia-east1.run.app/api/approve?id=ssc-cgl-2026&token=ssc-cgl-2026-token-stk7",
+      "details": "Email notification queued for shadabsarwar@gmail.com (SMTP credentials not configured - use 1-click Gmail Webmail link or configure SMTP in preferences). WhatsApp alert prepared with 1-tap approval link for +919948900368. "
+    },
+    {
+      "id": "notif-test-email-1792516993953",
+      "timestamp": "2026-10-20T17:23:13.953Z",
+      "vacancyId": "test-admin-email",
+      "vacancyTitle": "🧪 Admin Email Test Alert (shadabsarwar@gmail.com)",
+      "recipientEmail": "shadabsarwar@gmail.com",
+      "recipientWhatsApp": "+919948900368",
+      "channel": "email",
+      "status": "sent",
+      "approvalUrl": "https://ais-dev-6jmtbv2spoj6xl7sqiygsj-639446796713.asia-east1.run.app/#approvals",
+      "details": "SMTP credentials not yet configured. Prepared 1-click Gmail Webmail link and mailto dispatch for shadabsarwar@gmail.com."
+    },
+    {
+      "id": "notif-test-1792515487041",
+      "timestamp": "2026-10-20T16:58:07.041Z",
+      "vacancyId": "test-admin-whatsapp",
+      "vacancyTitle": "🧪 Admin WhatsApp Test Alert (+919948900368)",
+      "recipientEmail": "shadabsarwar@gmail.com",
+      "recipientWhatsApp": "+919948900368",
+      "channel": "whatsapp",
+      "status": "sent",
+      "approvalUrl": "https://ais-dev-6jmtbv2spoj6xl7sqiygsj-639446796713.asia-east1.run.app/#approvals",
+      "details": "Test message generated for WhatsApp number +919948900368. Direct WhatsApp dispatch ready via wa.me protocol to +919948900368."
+    },
+    {
+      "id": "notif-1792504224640",
+      "timestamp": "2026-10-20T13:50:24.640Z",
+      "vacancyId": "ssc-cgl-2026",
+      "vacancyTitle": "SSC CGL 2026: Combined Graduate Level Exam (Inspector of Income Tax, ASO, Central Excise)",
+      "recipientEmail": "shadabsarwar@gmail.com",
+      "recipientWhatsApp": "+919948900368",
+      "channel": "both",
+      "status": "sent",
+      "approvalUrl": "https://ais-dev-6jmtbv2spoj6xl7sqiygsj-639446796713.asia-east1.run.app/api/approve?id=ssc-cgl-2026&token=ssc-cgl-2026-token-stk7",
+      "details": "Email notification queued for shadabsarwar@gmail.com with 1-click approval link. WhatsApp alert prepared with 1-tap approval link for +919948900368. "
+    },
+    {
+      "id": "notif-1792413464023",
+      "timestamp": "2026-10-19T12:37:44.023Z",
+      "vacancyId": "wbpsc-clerkship-2026",
+      "vacancyTitle": "WBPSC Clerkship Examination 2026: Lower Division Assistant (LDA) & LDC in State Secretariat & Directorates",
+      "recipientEmail": "shadabsarwar@gmail.com",
+      "recipientWhatsApp": "+919948900368",
+      "channel": "both",
+      "status": "sent",
+      "approvalUrl": "https://ais-dev-6jmtbv2spoj6xl7sqiygsj-639446796713.asia-east1.run.app/api/approve?id=wbpsc-clerkship-2026&token=wbpsc-clerkship-2026-9c8be872f8312755",
+      "details": "Email notification queued for shadabsarwar@gmail.com with 1-click approval link. WhatsApp alert prepared with 1-tap approval link for +919948900368. "
+    }
+  ]
+}
